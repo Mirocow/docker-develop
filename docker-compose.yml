@@ -1,0 +1,59 @@
+version: '3.3'
+services:
+  vertera_gen_proxy:
+    build:
+      context: provision/generator
+      args:
+        - 'DOCKER_GEN_VERSION=${DOCKER_GEN_VERSION}'
+    container_name: '${DOCKER_GEN:-vertera_gen_proxy}'
+    restart: unless-stopped
+    volumes:
+      - ${NGINX_FILES_PATH:-./data}/nginx/conf.d:/etc/nginx/conf.d
+      - ${NGINX_FILES_PATH:-./data}/nginx/htpasswd:/etc/nginx/htpasswd:ro
+      - ${NGINX_FILES_PATH:-./data}/dnsmasq/dnsmasq.d:/etc/dnsmasq.d
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./provision/templates:/etc/docker-gen/templates:ro
+    logging:
+      driver: '${NGINX_GEN_LOG_DRIVER:-json-file}'
+      options:
+        max-size: '${NGINX_GEN_LOG_MAX_SIZE:-2m}'
+        max-file: '${NGINX_GEN_LOG_MAX_FILE:-10}'
+  vertera_proxy:
+    build:
+      context: provision/proxy
+      args:
+        - 'NGINX_VERSION=${NGINX_VERSION}'
+    container_name: '${NGINX_PROXY:-vertera_proxy}'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+    volumes:
+      - ${NGINX_FILES_PATH:-./data}/nginx/conf.d:/etc/nginx/conf.d
+      - ${NGINX_FILES_PATH:-./data}/nginx/htpasswd:/etc/nginx/htpasswd:ro
+    logging:
+      driver: '${NGINX_WEB_LOG_DRIVER:-json-file}'
+      options:
+        max-size: '${NGINX_WEB_LOG_MAX_SIZE:-4m}'
+        max-file: '${NGINX_WEB_LOG_MAX_FILE:-10}'
+  vertera_dns:
+    image: vimagick/dnsmasq
+    build: provision/dnsmasq
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=1
+      - net.ipv6.conf.default.disable_ipv6=1
+      - net.ipv6.conf.lo.disable_ipv6=1
+    container_name: vertera_dns
+    volumes:
+      - ${NGINX_FILES_PATH:-./data}/dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf
+      - ${NGINX_FILES_PATH:-./data}/dnsmasq/dnsmasq.d:/etc/dnsmasq.d
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+    networks:
+      default:
+        ipv4_address: ${NETWORK_PROXY_IP}
+networks:
+  default:
+    external:
+      name: '${NETWORK}'
+

@@ -1,0 +1,18 @@
+## Zones
+
+{{ $CurrentContainer := where $ "ID" .Docker.CurrentContainerID | first }}
+  {{ range $host, $containers := groupByMulti $ "Env.VIRTUAL_HOST" "," }}
+    {{ $host := trim $host }}
+    {{ $is_regexp := hasPrefix "~" $host }}
+    {{ $upstream_name := when $is_regexp (sha1 $host) $host }}
+    {{ range $container := $containers }}
+      {{ $addrLen := len $container.Addresses }}
+      {{ range $knownNetwork := $CurrentContainer.Networks }}
+        {{ range $containerNetwork := $container.Networks }}
+          {{ if (and (ne $containerNetwork.Name "ingress") (or (eq $knownNetwork.Name $containerNetwork.Name) (eq $knownNetwork.Name "host"))) }}
+address=/{{ $host }}/{{ $containerNetwork.IP }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+{{ end }}

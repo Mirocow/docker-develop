@@ -1,0 +1,9 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null 2>&1 && pwd )"
+
+CONF_FILE=${1##*_}
+
+cd $DIR
+
+sudo docker-compose -f $CONF_FILE.loc.yml exec $1 /bin/bash

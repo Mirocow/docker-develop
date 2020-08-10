@@ -1,0 +1,6 @@
+version: '3'
+
+services:
+  php_yii2_app:
+    volumes:
+      - './provision/php/7.2/xdebug.ini:/etc/php7/conf.d/xdebug.ini'

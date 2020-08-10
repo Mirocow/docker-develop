@@ -1,0 +1,3 @@
+* * * * * php /app/yii user-notify/send-deferred
+* * * * * php /app/yii user-notify/birthday
+
