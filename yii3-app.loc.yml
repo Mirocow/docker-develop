@@ -1,0 +1,56 @@
+version: "3"
+
+services:
+  yii3_app_loc:
+    build: 
+      context: provision/nginx
+      args:
+        - NGINX_VERSION=${NGINX_VERSION}
+    restart: unless-stopped
+    links:
+      - php_yii3_app
+    volumes:
+      - ./hosts/yii3-app.loc/httpdocs:/app:rw
+      - ./hosts/yii3-app.loc/etc/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    environment:
+      VIRTUAL_HOST: yii3-app.loc
+      VIRTUAL_PORT: 80
+    expose:
+      - '80'
+    dns:
+      - ${NETWORK_PROXY_IP}
+  php_yii3_app:
+    build: provision/php/7.4
+    restart: unless-stopped
+    links:
+      - mysql_yii3_app
+    ports:
+      - '9012:9000'
+    expose:
+      - '9000'
+      - '9001'
+    dns:
+      - ${NETWORK_PROXY_IP}
+    environment:
+      - PHP_IDE_CONFIG=serverName=yii3-app.loc
+    volumes:
+      - ./hosts/yii3-app.loc/httpdocs:/app:rw
+  mysql_yii3_app:
+    build: provision/mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: yii3-app
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - '3315:3306'
+    dns:
+      - ${NETWORK_PROXY_IP}
+    volumes:
+      - './scripts:/app'
+
+networks:
+    default:
+       external:
+         name: '${NETWORK}'

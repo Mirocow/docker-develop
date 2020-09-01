@@ -1,3 +1,11 @@
+# Install projects
+
+```bash
+$ git clone https://github.com/Mirocow/docker-develop.git
+$ cd docker-develop
+$ git submodule update --remote
+```
+
 # Start/Stop proxy
 
 ```bash
