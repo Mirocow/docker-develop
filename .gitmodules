@@ -1,3 +1,6 @@
 [submodule "app"]
-	path = app
-	url = ../../yiisoft/app.git
+	path = ./hosts/yii3-app.loc/httpdocs
+	url = https://github.com/yiisoft/app.git
+[submodule "yii-demo"]
+	path = ./hosts/yii3-demo.loc/httpdocs
+	url = https://github.com/yiisoft/yii-demo.git
