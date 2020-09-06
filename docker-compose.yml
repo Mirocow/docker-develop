@@ -1,11 +1,11 @@
 version: '3.3'
 services:
-  vertera_gen_proxy:
+  docker_develop_gen_proxy:
     build:
       context: provision/generator
       args:
         - 'DOCKER_GEN_VERSION=${DOCKER_GEN_VERSION}'
-    container_name: '${DOCKER_GEN:-vertera_gen_proxy}'
+    container_name: '${DOCKER_GEN:-docker_developn_proxy}'
     restart: unless-stopped
     volumes:
       - ${NGINX_FILES_PATH:-./data}/nginx/conf.d:/etc/nginx/conf.d
@@ -18,12 +18,12 @@ services:
       options:
         max-size: '${NGINX_GEN_LOG_MAX_SIZE:-2m}'
         max-file: '${NGINX_GEN_LOG_MAX_FILE:-10}'
-  vertera_proxy:
+  docker_develop_proxy:
     build:
       context: provision/proxy
       args:
         - 'NGINX_VERSION=${NGINX_VERSION}'
-    container_name: '${NGINX_PROXY:-vertera_proxy}'
+    container_name: '${NGINX_PROXY:-yiidocker_develop}'
     restart: unless-stopped
     ports:
       - '80:80'
@@ -35,15 +35,14 @@ services:
       options:
         max-size: '${NGINX_WEB_LOG_MAX_SIZE:-4m}'
         max-file: '${NGINX_WEB_LOG_MAX_FILE:-10}'
-  vertera_dns:
+  docker_develop_dns:
     image: vimagick/dnsmasq
     build: provision/dnsmasq
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=1
       - net.ipv6.conf.default.disable_ipv6=1
       - net.ipv6.conf.lo.disable_ipv6=1
-    container_name: vertera_dns
-    volumes:
+    container_name: docker_develop_ddocker_developvolumes:
       - ${NGINX_FILES_PATH:-./data}/dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf
       - ${NGINX_FILES_PATH:-./data}/dnsmasq/dnsmasq.d:/etc/dnsmasq.d
     cap_add:
