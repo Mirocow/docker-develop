@@ -4,6 +4,7 @@
 $ git clone https://github.com/Mirocow/docker-develop.git
 $ cd docker-develop
 $ git submodule update --remote
+$ cp .env.sample .env
 ```
 
 # Start/Stop proxy
