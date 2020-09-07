@@ -10,7 +10,7 @@
       {{ range $knownNetwork := $CurrentContainer.Networks }}
         {{ range $containerNetwork := $container.Networks }}
           {{ if (and (ne $containerNetwork.Name "ingress") (or (eq $knownNetwork.Name $containerNetwork.Name) (eq $knownNetwork.Name "host"))) }}
-address=/{{ $host }}/{{ $containerNetwork.IP }}
+address=/{{ $host }}/{{$containerNetwork.IP }}
           {{ end }}
         {{ end }}
       {{ end }}
