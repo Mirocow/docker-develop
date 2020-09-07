@@ -101,10 +101,12 @@ $ bash stop.sh && bash start.sh
 $ docker-compose -f yii3-app.loc.yml up -d
 $ docker-compose -f yii3-app.loc.yml exec -T php_yii3_app /bin/bash -c 'cd /app && rm .gitignore && composer create-project --prefer-dist --stability=dev yiisoft/app ./'
 $ docker-compose -f yii3-app.loc.yml exec -T php_yii3_app /bin/bash -c 'cd /app && composer install'
-$ docker-compose -f yii3-app.loc.yml exec -T php_yii3_app /bin/bash -c 'cd /app && php ./init --env=Development --overwrite=y'
-$ docker-compose -f yii3-app.loc.yml exec -T php_yii3_app /bin/bash -c 'cd /app && php ./yii migrate/up --interactive=0'
+$ docker-compose -f yii3-app.loc.yml exec -T php_yii3_app /bin/bash -c 'cd /app && php ./vendor/bin/yii'
 $ docker-compose -f yii3-app.loc.yml exec -T php_yii3_app /bin/bash -c 'cd /app && git config core.fileMode false'
 ```
+
+        "yiisoft/db": "@dev",
+        "yiisoft/yii-db-migration": "@dev",
 
 ### With debug
 
@@ -128,8 +130,7 @@ $ bash stop.sh && bash start.sh
 $ docker-compose -f yii3-demo.loc.yml up -d
 $ docker-compose -f yii3-demo.loc.yml exec -T php_yii3_demo /bin/bash -c 'cd /app && rm .gitignore && git clone https://github.com/yiisoft/yii-demo.git ./'
 $ docker-compose -f yii3-demo.loc.yml exec -T php_yii3_demo /bin/bash -c 'cd /app && composer install'
-$ docker-compose -f yii3-demo.loc.yml exec -T php_yii3_demo /bin/bash -c 'cd /app && php ./init --env=Development --overwrite=y'
-$ docker-compose -f yii3-demo.loc.yml exec -T php_yii3_demo /bin/bash -c 'cd /app && php ./yii migrate/up --interactive=0'
+$ docker-compose -f yii3-demo.loc.yml exec -T php_yii3_demo /bin/bash -c 'cd /app && php ./vendor/bin/yii'
 $ docker-compose -f yii3-demo.loc.yml exec -T php_yii3_demo /bin/bash -c 'cd /app && git config core.fileMode false'
 ```
 
