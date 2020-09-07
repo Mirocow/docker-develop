@@ -5,7 +5,6 @@ services:
       context: provision/generator
       args:
         - 'DOCKER_GEN_VERSION=${DOCKER_GEN_VERSION}'
-    container_name: '${DOCKER_GEN:-docker_develop_gen_proxy}'
     restart: unless-stopped
     volumes:
       - ${NGINX_FILES_PATH:-./data}/nginx/conf.d:/etc/nginx/conf.d
@@ -23,7 +22,6 @@ services:
       context: provision/proxy
       args:
         - 'NGINX_VERSION=${NGINX_VERSION}'
-    container_name: '${NGINX_PROXY:-docker_develop_webproxy}'
     restart: unless-stopped
     ports:
       - '80:80'
@@ -42,7 +40,6 @@ services:
       - net.ipv6.conf.all.disable_ipv6=1
       - net.ipv6.conf.default.disable_ipv6=1
       - net.ipv6.conf.lo.disable_ipv6=1
-    container_name: docker_develop_dns
     volumes:
       - ${NGINX_FILES_PATH:-./data}/dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf
       - ${NGINX_FILES_PATH:-./data}/dnsmasq/dnsmasq.d:/etc/dnsmasq.d
@@ -55,5 +52,6 @@ services:
 networks:
   default:
     external:
-      name: '${NETWORK:-docker_develop_webproxy}'
-
+      name: '${NETWORK}'
+volumes:
+  portainer_data:

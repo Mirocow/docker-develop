@@ -51,6 +51,6 @@ services:
       - './scripts:/app'
 
 networks:
-    default:
-       external:
-         name: '${NETWORK}'
+  default:
+    external:
+      name: '${NETWORK}'

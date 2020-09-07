@@ -13,7 +13,7 @@ services:
       - ./hosts/yii3-demo.loc/httpdocs:/demo:rw
       - ./hosts/yii3-demo.loc/etc/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     environment:
-      VIRTUAL_HOST: yii3-demo.loc,back.yii3-demo.loc
+      VIRTUAL_HOST: yii3-demo.loc
       VIRTUAL_PORT: 80
     expose:
       - '80'
@@ -51,6 +51,6 @@ services:
       - './scripts:/demo'
 
 networks:
-    default:
-       external:
-         name: '${NETWORK}'
+  default:
+    external:
+      name: '${NETWORK}'
