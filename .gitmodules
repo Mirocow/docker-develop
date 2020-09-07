@@ -1,0 +1,3 @@
+[submodule "hosts/yii3-demo.loc/httpdocs"]
+	path = hosts/yii3-demo.loc/httpdocs
+	url = https://github.com/yiisoft/yii-demo.git
