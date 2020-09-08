@@ -1,6 +1,7 @@
 version: '3.3'
 services:
   docker_develop_gen_proxy:
+    container_name: docker_develop_gen_proxy
     build:
       context: provision/generator
       args:
@@ -18,6 +19,7 @@ services:
         max-size: '${NGINX_GEN_LOG_MAX_SIZE:-2m}'
         max-file: '${NGINX_GEN_LOG_MAX_FILE:-10}'
   docker_develop_proxy:
+    container_name: docker_develop_proxy
     build:
       context: provision/proxy
       args:
@@ -36,6 +38,7 @@ services:
   docker_develop_dns:
     image: vimagick/dnsmasq
     build: provision/dnsmasq
+    container_name: docker_develop_dns
     sysctls:
       - net.ipv6.conf.all.disable_ipv6=1
       - net.ipv6.conf.default.disable_ipv6=1

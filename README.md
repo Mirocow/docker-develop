@@ -46,14 +46,14 @@ $ bash stop.sh
 # Ports
 ```
 ├── yii2-app.loc            - Yii2 advanced project
-|   ├── MariaDB  3306
+|   ├── MariaDB  3307
 |   └── PHP7.2   9002
 ├── yii3-app.loc            - Yii3 advanced project
-|   ├── MariaDB  3307
-|   └── PHP7.2   9003
-├── yii3-demo.loc            - Yii3 advanced project
 |   ├── MariaDB  3308
-|   └── PHP7.2   9004
+|   └── PHP7.4   9003
+├── yii3-demo.loc            - Yii3 advanced project
+|   ├── MariaDB  3309
+|   └── PHP7.4   9004
 ├── Other projects
 ```
 
@@ -104,9 +104,6 @@ $ docker-compose -f yii3-app.loc.yml exec -T php_yii3_app /bin/bash -c 'cd /app 
 $ docker-compose -f yii3-app.loc.yml exec -T php_yii3_app /bin/bash -c 'cd /app && php ./vendor/bin/yii'
 $ docker-compose -f yii3-app.loc.yml exec -T php_yii3_app /bin/bash -c 'cd /app && git config core.fileMode false'
 ```
-
-        "yiisoft/db": "@dev",
-        "yiisoft/yii-db-migration": "@dev",
 
 ### With debug
 

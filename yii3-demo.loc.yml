@@ -6,6 +6,7 @@ services:
       context: provision/nginx
       args:
         - NGINX_VERSION=${NGINX_VERSION}
+    container_name: yii3-demo.loc
     restart: unless-stopped
     links:
       - php_yii3_demo
@@ -21,11 +22,12 @@ services:
       - ${NETWORK_PROXY_IP}
   php_yii3_demo:
     build: provision/php/7.4
+    container_name: php_yii3_demo
     restart: unless-stopped
     links:
       - mysql_yii3_demo
     ports:
-      - '9012:9000'
+      - '9004:9000'
     expose:
       - '9000'
       - '9001'
@@ -37,6 +39,7 @@ services:
       - ./hosts/yii3-demo.loc/httpdocs:/demo:rw
   mysql_yii3_demo:
     build: provision/mariadb
+    container_name: mysql_yii3_demo
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: password
@@ -44,7 +47,7 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     ports:
-      - '3315:3306'
+      - '3309:3306'
     dns:
       - ${NETWORK_PROXY_IP}
     volumes:

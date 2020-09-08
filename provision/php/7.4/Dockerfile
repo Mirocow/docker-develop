@@ -69,54 +69,24 @@ RUN	 apk update && \
 	php7-pecl-xdebug \
 	&& \
 	# Set environments
-	sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /usr/local/etc/php-fpm.conf && \
-	sed -i "s|;*listen\s*=\s*127.0.0.1:9000|listen = 9000|g" /usr/local/etc/php-fpm.d/www.conf && \
-	sed -i "s|;*listen\s*=\s*/||g" /usr/local/etc/php-fpm.d/www.conf && \
-	cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini && \
-	sed -i "s|;*date.timezone =.*|date.timezone = ${TIMEZONE}|i" /usr/local/etc/php/php.ini && \
-	sed -i "s|;*memory_limit =.*|memory_limit = ${PHP_MEMORY_LIMIT}|i" /usr/local/etc/php/php.ini && \
-	sed -i "s|;*upload_max_filesize =.*|upload_max_filesize = ${MAX_UPLOAD}|i" /usr/local/etc/php/php.ini && \
-	sed -i "s|;*max_file_uploads =.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|i" /usr/local/etc/php/php.ini && \
-	sed -i "s|;*post_max_size =.*|post_max_size = ${PHP_MAX_POST}|i" /usr/local/etc/php/php.ini && \
-	sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= 0|i" /usr/local/etc/php/php.ini && \
+	sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php7/php-fpm.conf && \
+	sed -i "s|;*listen\s*=\s*127.0.0.1:9000|listen = 9000|g" /etc/php7/php-fpm.d/www.conf && \
+	sed -i "s|;*listen\s*=\s*/||g" /etc/php7/php-fpm.d/www.conf && \
+	sed -i "s|;*date.timezone =.*|date.timezone = ${TIMEZONE}|i" /etc/php7/php.ini && \
+	sed -i "s|;*memory_limit =.*|memory_limit = ${PHP_MEMORY_LIMIT}|i" /etc/php7/php.ini && \
+	sed -i "s|;*upload_max_filesize =.*|upload_max_filesize = ${MAX_UPLOAD}|i" /etc/php7/php.ini && \
+	sed -i "s|;*max_file_uploads =.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|i" /etc/php7/php.ini && \
+	sed -i "s|;*post_max_size =.*|post_max_size = ${PHP_MAX_POST}|i" /etc/php7/php.ini && \
+	sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= 0|i" /etc/php7/php.ini && \
 	# Cleaning up
 	mkdir /app && \
 	apk del tzdata && \
 	rm -rf /var/cache/apk/*
 
-#RUN rm /usr/bin/pecl
-#RUN rm /usr/bin/php
-#RUN rm /usr/sbin/php-fpm7
-#RUN ln -s /usr/local/bin/pecl /usr/bin/pecl
-#RUN ln -s /usr/local/bin/php /usr/bin/php
-#RUN ln -s /usr/local/sbin/php-fpm /usr/sbin/php-fpm7
-#RUN ln -s $PHP_INI_DIR/php-fpm.conf /usr/local/etc/php/php-fpm.conf
-#RUN ln -s $PHP_INI_DIR/php.ini /usr/local/etc/php/php.ini
-
-RUN rm $PHP_INI_DIR/conf.d/*mysqlnd.ini
-RUN rm $PHP_INI_DIR/conf.d/*ctype.ini
-RUN rm $PHP_INI_DIR/conf.d/*curl.ini
-RUN rm $PHP_INI_DIR/conf.d/*sqlite3.ini
-RUN rm $PHP_INI_DIR/conf.d/*tokenizer.ini
-RUN rm $PHP_INI_DIR/conf.d/*xml.ini
-RUN rm $PHP_INI_DIR/conf.d/*xmlwriter.ini
-RUN rm $PHP_INI_DIR/conf.d/*zip.ini
-RUN rm $PHP_INI_DIR/conf.d/*pdo_sqlite.ini
-RUN rm $PHP_INI_DIR/conf.d/*phar.ini
-RUN rm $PHP_INI_DIR/conf.d/*xmlreader.ini
-RUN rm $PHP_INI_DIR/conf.d/*dom.ini
-RUN rm $PHP_INI_DIR/conf.d/*ftp.ini
-RUN rm $PHP_INI_DIR/conf.d/*iconv.ini
-RUN rm $PHP_INI_DIR/conf.d/*json.ini
-RUN rm $PHP_INI_DIR/conf.d/*mbstring.ini
-RUN rm $PHP_INI_DIR/conf.d/*openssl.ini
-RUN rm $PHP_INI_DIR/conf.d/*pdo.ini
-RUN rm $PHP_INI_DIR/conf.d/*posix.ini
-RUN rm $PHP_INI_DIR/conf.d/*session.ini
-RUN rm $PHP_INI_DIR/conf.d/*fileinfo.ini
-
-RUN ln -s $PHP_INI_DIR/conf.d/* $(php-config --ini-path)/conf.d
-RUN ln -s /usr/lib/php7/modules/*.so $(php-config --extension-dir)/ 
+RUN rm /usr/local/bin/php
+RUN rm /usr/local/sbin/php-fpm
+RUN rm /usr/local/bin/pecl
+RUN ln -s /usr/sbin/php-fpm7 /usr/sbin/php-fpm
 
 RUN apk add --no-cache --allow-untrusted \
 	#gnu-libiconv \
@@ -148,13 +118,12 @@ RUN set -xe \
 	--virtual .phpize-deps \
 	$PHPIZE_DEPS \
 	#&& sed -i 's/^exec $PHP -C -n/exec $PHP -C/g' $(which pecl) \
-	#&& /usr/bin/pecl channel-update pecl.php.net \
+	#&& pecl channel-update pecl.php.net \
   #&& pecl install yaml event \
 	#&& pecl install yaml geoip-1.1.1 \
 	#&& echo "extension=geoip.so" >> $PHP_INI_DIR/conf.d/geoip.ini \
 	#&& echo "extension=yaml.so" > $PHP_INI_DIR/conf.d/01_yaml.ini \
 	#&& echo "extension=event.so" > $PHP_INI_DIR/conf.d/01_event.ini \
-	#&& echo "extension=intl.so" > $PHP_INI_DIR/conf.d/01_intl.ini \
 	#&& wget -q https://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz -P /usr/share/GeoIP/ \
 	#&& gzip -d /usr/share/GeoIP/GeoLiteCity.dat.gz \
 	#&& mv /usr/share/GeoIP/GeoLiteCity.dat /usr/share/GeoIP/GeoIPCity.dat \		
@@ -172,4 +141,4 @@ VOLUME ["/app"]
 #EXPOSE 9000
 
 # Entry point
-ENTRYPOINT ["/usr/sbin/php-fpm7", "-F"]
+ENTRYPOINT ["/usr/sbin/php-fpm", "-F"]
