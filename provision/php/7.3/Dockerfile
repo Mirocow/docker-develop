@@ -130,7 +130,8 @@ RUN set -xe \
 	#&& mv /usr/share/GeoIP/GeoLiteCity.dat /usr/share/GeoIP/GeoIPCity.dat \		
 	&& rm -rf /usr/share/php7 \
 	&& rm -rf /tmp/* \
-	&& apk del .phpize-deps
+	&& apk del .phpize-deps && \
+	rm -rf /var/cache/apk/*
 
 RUN curl -L https://github.com/sequenceiq/docker-alpine-dig/releases/download/v9.10.2/dig.tgz|tar -xzv -C /usr/local/bin/
 	
