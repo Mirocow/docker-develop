@@ -127,7 +127,8 @@ RUN set -xe \
   #&& mv /usr/share/GeoIP/GeoLiteCity.dat /usr/share/GeoIP/GeoIPCity.dat \		
   && rm -rf /usr/share/php7 \
   && rm -rf /tmp/* \
-  && apk del .phpize-deps
+  && apk del .phpize-deps && \
+  rm -rf /var/cache/apk/*
 	
 # Set Workdir
 WORKDIR /app
