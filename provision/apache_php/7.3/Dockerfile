@@ -4,13 +4,13 @@ MAINTAINER romeOz <serggalka@gmail.com>
 ENV OS_LOCALE="en_US.UTF-8"
 RUN apt-get update --fix-missing && apt-get install -y locales && locale-gen ${OS_LOCALE}
 ENV LANG=${OS_LOCALE} \
-    LANGUAGE=${OS_LOCALE} \
-    LC_ALL=${OS_LOCALE} \
-    DEBIAN_FRONTEND=noninteractive
+	LANGUAGE=${OS_LOCALE} \
+	LC_ALL=${OS_LOCALE} \
+	DEBIAN_FRONTEND=noninteractive
 
 ENV APACHE_CONF_DIR=/etc/apache2 \
-    PHP_CONF_DIR=/etc/php/7.3 \
-    PHP_DATA_DIR=/var/lib/php
+	PHP_CONF_DIR=/etc/php/7.3 \
+	PHP_DATA_DIR=/var/lib/php
 
 COPY ./app /var/www/app/
 COPY entrypoint.sh /sbin/entrypoint.sh

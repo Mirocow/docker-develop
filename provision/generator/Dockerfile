@@ -6,8 +6,10 @@ RUN apk update && apk upgrade && apk add --no-cache --allow-untrusted \
 	nano \
 	supervisor \
 	curl \
+	&& rm -rf /tmp/* \
 	&& rm -rf /var/cache/apk/* \
-	&& rm -rvf /var/lib/apt/lists/*
+	&& rm -rvf /var/lib/apt/lists/* \
+	rm -vf /etc/ssh/ssh_host_*
 
 ADD supervisord.conf /etc/supervisor/supervisord.conf
 

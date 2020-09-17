@@ -1,0 +1,59 @@
+version: "3"
+
+services:
+  bitrix_loc:
+    build: 
+      context: provision/nginx
+      args:
+        - NGINX_VERSION=${NGINX_VERSION}
+    container_name: bitrix.loc
+    restart: unless-stopped
+    links:
+      - php_bitrix
+    volumes:
+      - ./hosts/bitrix.loc/httpdocs:/app:rw
+      - ./hosts/bitrix.loc/etc/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    environment:
+      VIRTUAL_HOST: bitrix.loc
+      VIRTUAL_PORT: 80
+    expose:
+      - '80'
+    dns:
+      - ${NETWORK_PROXY_IP}
+  php_bitrix:
+    build: provision/php/7.2
+    container_name: php_bitrix
+    restart: unless-stopped
+    links:
+      - mysql_bitrix
+    ports:
+      - '9004:9000'
+    expose:
+      - '9000'
+      - '9001'
+    dns:
+      - ${NETWORK_PROXY_IP}
+    environment:
+      - PHP_IDE_CONFIG=serverName=bitrix.loc
+    volumes:
+      - ./hosts/bitrix.loc/httpdocs:/app:rw
+  mysql_bitrix:
+    build: provision/mariadb
+    container_name: mysql_bitrix
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: bitrix
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - '3309:3306'
+    dns:
+      - ${NETWORK_PROXY_IP}
+    volumes:
+      - './scripts:/app'
+
+networks:
+  default:
+    external:
+      name: '${NETWORK}'

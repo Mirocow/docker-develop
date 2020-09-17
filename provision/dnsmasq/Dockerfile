@@ -1,7 +1,11 @@
 FROM alpine
 
 RUN set -xe \
-    && apk add --no-cache dnsmasq
+    && apk add --no-cache dnsmasq \
+    && rm -rf /tmp/* \
+    && rm -rf /var/cache/apk/* \
+    && rm -rvf /var/lib/apt/lists/* \
+    rm -vf /etc/ssh/ssh_host_*
 
 VOLUME /etc/dnsmasq
 
