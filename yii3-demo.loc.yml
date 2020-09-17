@@ -11,7 +11,7 @@ services:
     links:
       - php_yii3_demo
     volumes:
-      - ./hosts/yii3-demo.loc/httpdocs:/demo:rw
+      - ./hosts/yii3-demo.loc/httpdocs:/app:rw
       - ./hosts/yii3-demo.loc/etc/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     environment:
       VIRTUAL_HOST: yii3-demo.loc
@@ -36,7 +36,7 @@ services:
     environment:
       - PHP_IDE_CONFIG=serverName=yii3-demo.loc
     volumes:
-      - ./hosts/yii3-demo.loc/httpdocs:/demo:rw
+      - ./hosts/yii3-demo.loc/httpdocs:/app:rw
   mysql_yii3_demo:
     build: provision/mariadb
     container_name: mysql_yii3_demo
@@ -51,7 +51,7 @@ services:
     dns:
       - ${NETWORK_PROXY_IP}
     volumes:
-      - './scripts:/demo'
+      - './scripts:/app'
 
 networks:
   default:
