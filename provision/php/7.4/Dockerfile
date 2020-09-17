@@ -78,6 +78,8 @@ RUN	 apk update && \
 	sed -i "s|;*max_file_uploads =.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|i" /etc/php7/php.ini && \
 	sed -i "s|;*post_max_size =.*|post_max_size = ${PHP_MAX_POST}|i" /etc/php7/php.ini && \
 	sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= 0|i" /etc/php7/php.ini && \
+	sed -i "s|short_open_tag\s*=\s*Off|short_open_tag = On|i" /etc/php7/php.ini && \
+	sed -i "s|error_reporting\s*=\s*E_ALL\s*&\s*~E_DEPRECATED\s*&\s*~E_STRICT|error_reporting = E_ALL|i" /etc/php7/php.ini && \
 	# Cleaning up
 	mkdir /app && \
 	apk del tzdata && \
