@@ -144,3 +144,20 @@ $ docker-compose -f yii3-demo.loc.yml up -d
 $ docker-compose -f yii3-demo.loc.yml exec -T php_yii3_demo /bin/bash -c 'cd /app/common/tests && php ./bin/yii migrate/up --interactive=0'
 ```
 
+### Added custom nginx modules
+
+#### Documentation
+
+* https://romden.me/debian/nginx/devops/sysadm/nginx-add-modules/
+* https://dermanov.ru/exp/configure-push-and-pull-module-for-bitrix24/
+* https://habr.com/ru/company/cackle/blog/167895/
+* https://www.nginx.com/resources/wiki/modules/push_stream/
+* https://github.com/LoicMahieu/alpine-nginx/blob/master/Dockerfile
+* https://www.linux.org.ru/forum/admin/13200380
+* https://dev.1c-bitrix.ru/support/forum/forum23/topic62672/
+* https://www.nginx.com/blog/compiling-dynamic-modules-nginx-plus/#load_module
+
+#### Nginx modules
+
+* https://github.com/wandenberg/nginx-push-stream-module
+
