@@ -13,6 +13,9 @@ services:
     volumes:
       - ./hosts/bitrix.loc/httpdocs:/app:rw
       - ./hosts/bitrix.loc/etc/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./hosts/bitrix.loc/etc/nginx/bitrix.conf:/etc/nginx/conf.d/bitrix.conf.part:ro
+      - ./hosts/bitrix.loc/etc/nginx/bitrix_general.conf:/etc/nginx/conf.d/bitrix_general.conf.part:ro
+      - ./hosts/bitrix.loc/etc/nginx/im_subscrider.conf:/etc/nginx/conf.d/im_subscrider.conf.part:ro
     environment:
       VIRTUAL_HOST: bitrix.loc
       VIRTUAL_PORT: 80
