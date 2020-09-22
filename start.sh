@@ -64,9 +64,9 @@ cp ./provision/dnsmasq/dnsmasq.conf $CONFIG_FILES_PATH/dnsmasq/dnsmasq.conf
 # 7. Start proxy
 
 if [ ! -z ${VERBOSE} ] && [ "$VERBOSE" = true ]; then
-  docker-compose --verbose up -d --build --force-recreate
+  docker-compose --verbose up -d --build
 else
-  docker-compose up -d --build --force-recreate
+  docker-compose up -d --build
 fi
 
 exit 0

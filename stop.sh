@@ -16,10 +16,6 @@ echo "STOP PROXY"
 
 docker-compose -f docker-compose.yml stop
 
-docker network rm ${NETWORK}
-
-docker-compose -f docker-compose.yml down
-
 rm -rf data
 
 exit 0

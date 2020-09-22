@@ -89,7 +89,6 @@ RUN ln -s /usr/bin/php7 /usr/bin/php
 RUN ln -s /usr/sbin/php-fpm7 /usr/sbin/php-fpm
 
 RUN apk add --no-cache --allow-untrusted \
-	#gnu-libiconv \
 	curl \
 	wget \
 	git \
@@ -102,11 +101,8 @@ RUN apk add --no-cache --allow-untrusted \
 	busybox-extras \
 	yarn \
 	openssh \
-	npm \
 	bash \
 	  && rm -rf /var/cache/apk/*
-		
-RUN npm install -g gulp	
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer 

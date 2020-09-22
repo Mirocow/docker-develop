@@ -14,6 +14,10 @@ $ bash start.sh
 $ bash stop.sh
 ```
 
+# Docker manager Portainer
+
+http://127.0.0.1:8080/
+
 # Projects and configurations
 
 ```

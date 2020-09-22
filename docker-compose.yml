@@ -52,6 +52,14 @@ services:
     networks:
       default:
         ipv4_address: ${NETWORK_PROXY_IP}
+  portainer:
+    image: portainer/portainer
+    volumes:
+      - ./data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8080:9000
+
 networks:
   default:
     external:
